@@ -51,9 +51,25 @@ public class PlayerTest {
     }
 
     @Test
-    public void testMoveForward() {
+    public void testMoveForward() { // Tests a 360 with forward movements
         player.moveForward();
         assertEquals(-1, player.getXPos());
+        assertEquals(0, player.getYPos());
+
+        player.turnLeft();
+        player.moveForward();
+        assertEquals(-1, player.getXPos());
+        assertEquals(-1, player.getYPos());
+
+        player.turnLeft();
+        player.moveForward();
+        assertEquals(0, player.getXPos());
+        assertEquals(-1, player.getYPos());
+
+        player.turnLeft();
+        player.moveForward();
+        assertEquals(0, player.getXPos());
+        assertEquals(0, player.getYPos());
     }
 
 }
