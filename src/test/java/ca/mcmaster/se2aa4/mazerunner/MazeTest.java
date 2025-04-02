@@ -7,11 +7,9 @@ import org.junit.jupiter.api.Test;
 public class MazeTest {
 
     private Maze testMaze;
-    private Player testPlayer;
 
     @BeforeEach
     public void setUp() {
-        testPlayer = new Player(0, 0, Player.Direction.NORTH);
         testMaze = new Maze("./examples/tiny.maz.txt");
     }
 
