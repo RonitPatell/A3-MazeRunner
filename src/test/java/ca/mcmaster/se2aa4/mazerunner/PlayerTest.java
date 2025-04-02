@@ -1,75 +1,74 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
 
 public class PlayerTest {
 
-    private Player player;
+    private Player testPlayer;
 
-    @BeforeEach
+    @Before
     public void setUp() {
-        player = new Player(0, 0, Player.Direction.NORTH);
+        testPlayer = new Player(0, 0, Player.Direction.NORTH);
     }
 
     @Test
     public void testCurrentPosition() {
-        assertEquals(0, player.getXPos());
-        assertEquals(0, player.getYPos());
-        assertEquals(Player.Direction.NORTH, player.getDirection());
+        assertEquals(0, testPlayer.getXPos());
+        assertEquals(0, testPlayer.getYPos());
+        assertEquals(Player.Direction.NORTH, testPlayer.getDirection());
     }
 
     @Test
     public void testTurnLeft() { // Tests a full 360 of left turns
-        player.turnLeft();
-        assertEquals(Player.Direction.WEST, player.getDirection());
+        testPlayer.turnLeft();
+        assertEquals(Player.Direction.WEST, testPlayer.getDirection());
 
-        player.turnLeft();
-        assertEquals(Player.Direction.SOUTH, player.getDirection());
+        testPlayer.turnLeft();
+        assertEquals(Player.Direction.SOUTH, testPlayer.getDirection());
 
-        player.turnLeft();
-        assertEquals(Player.Direction.EAST, player.getDirection());
+        testPlayer.turnLeft();
+        assertEquals(Player.Direction.EAST, testPlayer.getDirection());
 
-        player.turnLeft();
-        assertEquals(Player.Direction.NORTH, player.getDirection());
+        testPlayer.turnLeft();
+        assertEquals(Player.Direction.NORTH, testPlayer.getDirection());
     }
 
     @Test
     public void testTurnRight() { // Tests a full 360 of right turns
-        player.turnRight();
-        assertEquals(Player.Direction.EAST, player.getDirection());
+        testPlayer.turnRight();
+        assertEquals(Player.Direction.EAST, testPlayer.getDirection());
 
-        player.turnRight();
-        assertEquals(Player.Direction.SOUTH, player.getDirection());
+        testPlayer.turnRight();
+        assertEquals(Player.Direction.SOUTH, testPlayer.getDirection());
 
-        player.turnRight();
-        assertEquals(Player.Direction.WEST, player.getDirection());
+        testPlayer.turnRight();
+        assertEquals(Player.Direction.WEST, testPlayer.getDirection());
 
-        player.turnRight();
-        assertEquals(Player.Direction.NORTH, player.getDirection());
+        testPlayer.turnRight();
+        assertEquals(Player.Direction.NORTH, testPlayer.getDirection());
     }
 
     @Test
     public void testMoveForward() { // Tests a 360 with forward movements
-        player.moveForward();
-        assertEquals(-1, player.getXPos());
-        assertEquals(0, player.getYPos());
+        testPlayer.moveForward();
+        assertEquals(-1, testPlayer.getXPos());
+        assertEquals(0, testPlayer.getYPos());
 
-        player.turnLeft();
-        player.moveForward();
-        assertEquals(-1, player.getXPos());
-        assertEquals(-1, player.getYPos());
+        testPlayer.turnLeft();
+        testPlayer.moveForward();
+        assertEquals(-1, testPlayer.getXPos());
+        assertEquals(-1, testPlayer.getYPos());
 
-        player.turnLeft();
-        player.moveForward();
-        assertEquals(0, player.getXPos());
-        assertEquals(-1, player.getYPos());
+        testPlayer.turnLeft();
+        testPlayer.moveForward();
+        assertEquals(0, testPlayer.getXPos());
+        assertEquals(-1, testPlayer.getYPos());
 
-        player.turnLeft();
-        player.moveForward();
-        assertEquals(0, player.getXPos());
-        assertEquals(0, player.getYPos());
+        testPlayer.turnLeft();
+        testPlayer.moveForward();
+        assertEquals(0, testPlayer.getXPos());
+        assertEquals(0, testPlayer.getYPos());
     }
-
 }

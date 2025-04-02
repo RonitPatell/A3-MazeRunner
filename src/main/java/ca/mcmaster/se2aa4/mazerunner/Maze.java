@@ -8,7 +8,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Maze {
+public final class Maze {
 
     private static final Logger logger = LogManager.getLogger(Maze.class);
 
@@ -25,7 +25,7 @@ public class Maze {
         processMaze();
     }
 
-    private void processMaze() {
+    public void processMaze() {
         List<String> fileLines = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(inputPath))) {
             String line;
@@ -53,7 +53,7 @@ public class Maze {
         findEntryAndExit();
     }
 
-    private void findEntryAndExit() {
+    protected void findEntryAndExit() {
         Integer leftOpeningRow = null;
         Integer rightOpeningRow = null;
         for (int row = 0; row < totalRows; row++) {
@@ -225,5 +225,21 @@ public class Maze {
         }
         result.append(prev);
         return result.toString();
+    }
+
+    public int getEntryRow() {
+        return entryRow;
+    }
+
+    public int getExitRow() {
+        return exitRow;
+    }
+
+    public int getEntryCol() {
+        return entryCol;
+    }
+
+    public int getExitCol() {
+        return exitCol;
     }
 }
