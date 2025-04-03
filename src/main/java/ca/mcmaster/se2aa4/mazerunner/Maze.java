@@ -3,7 +3,9 @@ package ca.mcmaster.se2aa4.mazerunner;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +14,7 @@ public final class Maze {
 
     private static final Logger logger = LogManager.getLogger(Maze.class);
 
-    private String inputPath;
+    private final String inputPath;
     private char[][] grid;
     private int totalRows;
     private int totalCols;
@@ -177,27 +179,21 @@ public final class Maze {
     public boolean verifyPath(String inputPath) {
         String canonicalPath = expandPath(inputPath);
 
-        int r = entryRow;
-        int c = entryCol;
-        Player.Direction d = (entryCol == 0) ? Player.Direction.EAST : Player.Direction.WEST;
+        Map<Character, MoveCommand> commandMap = new HashMap<>();
+        commandMap.put('L', new TurnLeftCommand());
+        commandMap.put('R', new TurnRightCommand());
+        commandMap.put('F', new MoveForwardCommand(1));
 
-        for (int i = 0; i < canonicalPath.length(); i++) {
-            char move = canonicalPath.charAt(i);
-            if (move == 'L') {
-                d = d.turnLeft();
-            } else if (move == 'R') {
-                d = d.turnRight();
-            } else if (move == 'F') {
-                int newRow = r + d.deltaRow();
-                int newCol = c + d.deltaCol();
-                if (!isFree(newRow, newCol)) {
-                    return false;
-                }
-                r = newRow;
-                c = newCol;
+        Player player = new Player(entryRow, entryCol, (entryCol == 0) ? Player.Direction.EAST : Player.Direction.WEST);
+
+        for (char move : canonicalPath.toCharArray()) {
+            MoveCommand command = commandMap.get(move);
+            command.execute(player);
+            if (!isFree(player.getRow(), player.getCol())) {
+                return false;
             }
         }
-        return (r == exitRow && c == exitCol);
+        return player.getRow() == exitRow && player.getCol() == exitCol;
     }
 
     public static String factorizePath(String path) {

@@ -37,6 +37,14 @@ public class Player {
         y += direction.deltaCol();
     }
 
+    public int getRow() {
+        return x;
+    }
+
+    public int getCol() {
+        return y;
+    }
+
     public enum Direction {
         NORTH, EAST, SOUTH, WEST;
 
