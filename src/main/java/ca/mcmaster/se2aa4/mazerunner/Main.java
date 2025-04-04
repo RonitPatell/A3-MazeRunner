@@ -36,7 +36,6 @@ public class Main {
         String inputFile = cmd.getOptionValue("i");
         logger.info("Reading the maze from file: " + inputFile);
         Maze maze = new Maze(inputFile);
-        //maze.displayMaze();
 
         if (cmd.hasOption("p")) {
             String pathSequence = cmd.getOptionValue("p");

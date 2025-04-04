@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,6 +23,8 @@ public final class Maze {
 
     private int entryRow, entryCol;
     private int exitRow, exitCol;
+
+    private final Observable observable = new Observable(); // Observable instance
 
     public Maze(String inputPath) {
         this.inputPath = inputPath;
@@ -93,6 +97,10 @@ public final class Maze {
         }
     }
 
+    public void addObserver(Observer observer) {
+        observable.addObserver(observer); // Delegate to Observable
+    }
+
     public String computePath() {
         StringBuilder path = new StringBuilder();
         int r = entryRow;
@@ -113,6 +121,7 @@ public final class Maze {
                 r += d.deltaRow();
                 c += d.deltaCol();
                 path.append("F");
+                observable.notifyObservers("Player moved to (" + r + ", " + c + ") facing " + d);
                 continue;
             }
             int rForward = r + d.deltaRow();
@@ -121,6 +130,7 @@ public final class Maze {
                 r = rForward;
                 c = cForward;
                 path.append("F");
+                observable.notifyObservers("Player moved to (" + r + ", " + c + ") facing " + d);
                 continue;
             }
             Player.Direction leftDir = d.turnLeft();
@@ -132,6 +142,7 @@ public final class Maze {
                 r += d.deltaRow();
                 c += d.deltaCol();
                 path.append("F");
+                observable.notifyObservers("Player moved to (" + r + ", " + c + ") facing " + d);
                 continue;
             }
             d = d.turnRight().turnRight();
@@ -139,11 +150,13 @@ public final class Maze {
             r += d.deltaRow();
             c += d.deltaCol();
             path.append("F");
+            observable.notifyObservers("Player moved to (" + r + ", " + c + ") facing " + d);
         }
         if (steps >= maxSteps) {
-            logger.error("Failed to solve maze using the right-hand rule within the step limit.");
+            observable.notifyObservers("Failed to solve maze using the right-hand rule within the step limit.");
             return null;
         }
+        observable.notifyObservers("Maze solved successfully!");
         return path.toString();
     }
 
